@@ -8,3 +8,27 @@
  * Author URI: https://github.com/syzygy333
  * License: GPL2
  */
+ 
+class keeler_plot_generator extends WP_Widget {
+  //  contructor
+  function keeler_plot_generator() {
+    
+  }
+  
+  // widget form creation
+  function form($instance) {
+    
+  }
+  
+  // widget update
+  function update($new_instance, $old_instance) {
+    
+  }
+  
+  // widget display
+  function widget($args, $instance) {
+    
+  }
+}
+// register widget
+add_action( 'widgets_init', create_function( '', 'return register_widget("keeler_plot_generator");' ) );
