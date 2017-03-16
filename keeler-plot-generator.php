@@ -95,3 +95,17 @@ class keeler_plot_generator extends WP_Widget {
 }
 // register widget
 add_action( 'widgets_init', create_function( '', 'return register_widget( "keeler_plot_generator" );' ) );
+
+/**
+ * Register with hook 'wp_enqueue_scripts', which can be used for front end CSS and JavaScript
+ */
+add_action( 'wp_enqueue_scripts', 'kpg_add_stylesheet' );
+
+/**
+ * Enqueue plugin style-file
+ */
+function kpg_add_stylesheet() {
+  // Respects SSL, Style.css is relative to the current file
+  wp_register_style( 'kpg-style', plugins_url( 'style.css', __FILE__ ) );
+  wp_enqueue_style( 'kpg-style' );
+}
