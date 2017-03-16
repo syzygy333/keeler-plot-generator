@@ -18,13 +18,17 @@ class keeler_plot_generator extends WP_Widget {
   // widget form creation
   function form( $instance ) {
     if ( $instance ) {
-      $title    = esc_attr( $instance['title'] );
-      $text     = esc_attr( $instance['text'] );
-      $textarea = esc_attr( $instance['textarea'] );
+      $title    = esc_attr( $instance[ 'title' ] );
+      $text     = esc_attr( $instance[ 'text' ] );
+      $textarea = esc_attr( $instance[ 'textarea' ] );
+      $checkbox = esc_attr( $instance[ 'checkbox' ] );
+      $select   = esc_attr( $instance[ 'select' ] );
     } else {
       $title    = '';
       $text     = '';
       $textarea = '';
+      $checkbox = '';
+      $select   = '';
     }
     ?>
     
@@ -40,20 +44,37 @@ class keeler_plot_generator extends WP_Widget {
       <label for="<?php echo $this->get_field_id( 'textarea' ); ?>"><?php _e( 'Textarea:', 'wp_widget_plugin' ); ?></label>
       <input class="widefat" id="<?php echo $this->get_field_id( 'textarea' ); ?>" name="<?php echo $this->get_field_name( 'textarea' ); ?>" type="text" value="<?php echo $textarea; ?>" />
     </p>
+    <p>
+      <input id="<?php echo esc_attr( $this->get_field_id( 'checkbox' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'checkbox' ) ); ?>" type="checkbox" value="1" <?php checked( '1', $checkbox ); ?> />
+      <label for="<?php echo esc_attr( $this->get_field_id( 'checkbox' ) ); ?>"><?php _e( 'Checkbox', 'wp_widget_plugin' ); ?></label>
+    </p>
+    <p>
+      <label for="<?php echo $this->get_field_id( 'select' ); ?>"><?php _e( 'Select', 'wp_widget_plugin' ); ?></label>
+      <select name="<?php echo $this->get_field_name( 'select' ); ?>" id="<?php echo $this->get_field_id( 'select' ); ?>" class="widefat">
+      <?php
+      $options = [ 'lorem', 'ipsum', 'dolorem' ];
+      foreach ( $options as $option ) {
+        echo '<option value="' . $option . '" id="' . $option . '"', $select == $option ? ' selected="selected"' : '', '>', $option, '</option>';
+      }
+      ?>
+      </select>
+    </p>
     
     <?php
   }
   
-  // widget update
+  // update widget
   function update( $new_instance, $old_instance ) {
     $instance = $old_instance;
     $instance[ 'title' ]    = strip_tags( $new_instance[ 'title' ] );
     $instance[ 'text' ]     = strip_tags( $new_instance[ 'text' ] );
     $instance[ 'textarea' ] = strip_tags( $new_instance[ 'textarea' ] );
+    $instance[ 'checkbox' ] = strip_tags( $new_instance[ 'checkbox' ] );
+    $instance[ 'select' ]   = strip_tags( $new_instance[ 'select' ] );
     return $instance;
   }
   
-  // widget display
+  // display widget
   function widget( $args, $instance ) {
     extract( $args );
     // these are the widget options
@@ -77,6 +98,19 @@ class keeler_plot_generator extends WP_Widget {
     if ( $textarea ) {
       echo '<p class="plot-generator-widget--textarea">' . $textarea . '</p>';
     }
+    // check if checkbox is checked
+    if ( $checkbox && $checkbox == '1' ) {
+      echo '<p>' . __( 'Checkbox is checked', 'wp_widget_plugin' ) . '</p>';
+    }
+    // get select value
+    if ( $select == 'lorem' ) {
+      echo 'Lorem option is selected';
+    } elseif ( $select == 'ipsum' ) {
+      echo 'Ipsum option is selected';
+    } else {
+      echo 'Dolorem option is selected';
+    }
+    
     echo '</div>';
     echo $after_widget;
   }
