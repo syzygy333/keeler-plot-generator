@@ -81,7 +81,7 @@ class keeler_plot_generator extends WP_Widget {
           "Buddhas", "Clocks", "Clowns", "Legs", "Balls", "Kings", "Ear-Drums", "Faces", "Fingers", "Leaves", "Spectacles", "Hours", "Eyes", "Nightgowns", "Sparrows", "Beans", "Fans", "Bottles", "Birds", "Hands", "Boxes"
         ]
       ];
-      $choice = $plot_generator[ $key ][ rand( 0, count( $plot_generator[ $key ] ) ) ];
+      $choice = $plot_generator[ $key ][ rand( 0, count( $plot_generator[ $key ] ) - 1 ) ];
       return $choice;
     }
     $plot_title_text_1 = randomize( 'titleText1' );
